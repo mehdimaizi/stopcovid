@@ -1,11 +1,13 @@
+@using stopcovid.Models
+@using System.Linq
 @page "/statistiquescovid-19"
 <h1>Derniers nouvelle du covid-19</h1>
 @inject HttpClient Http
 <p> Cette page vous permet d'avoir les statistiques du virus covid-19 au maroc par région  </p>
 
-@if (forecasts == null)
+@if (covidStats == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Veuillez patienter, chargement des donees...</em></p>
 }
 else
 {
@@ -13,19 +15,19 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Cas</th>
+                <th>Morts</th>
+                <th>Guerison</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var covidstat in covidStats)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@covidstat.Date.ToShortDateString()</td>
+                    <td>@covidstat.Cas</td>
+                    <td>@covidstat.Morts</td>
+                    <td>@covidstat.Guerisons</td>
                 </tr>
             }
         </tbody>
@@ -33,21 +35,14 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private CovidStat[] covidStats;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        covidStats = await Http.GetFromJsonAsync<CovidStat[]>("sample-data/stat.json");
+        covidStats = covidStats.OrderByDescending(c => c.Date).ToArray();
     }
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+    
+    
 }
