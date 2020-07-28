@@ -1,11 +1,12 @@
+@using stopcovid.Models
 @page "/actualitéscovid-19"
 <h1>Dernières mises à jour du Covid-19</h1>
 @inject HttpClient Http
 <p> Cette page vous permet d'avoir les dernières mises à jour du virus covid-19 au maroc </p>
 
-@if (forecasts == null)
+@if (actualiteCovid == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Veuillez patienter, chargement des donees...</em></p>
 }
 else
 {
@@ -13,19 +14,17 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Actualitedujour</th>
+                
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var actualitecovid in actualiteCovid)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@actualitecovid.Date.ToShortDateString()</td>
+                    <td>@actualitecovid.Actualitedujour</td>
+                    
                 </tr>
             }
         </tbody>
@@ -33,21 +32,13 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+   
+    private ActualiteCovid[] actualiteCovid;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        actualiteCovid = await Http.GetFromJsonAsync<ActualitesCovid[]>("sample-data/actu.json");
     }
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
+    
 }
