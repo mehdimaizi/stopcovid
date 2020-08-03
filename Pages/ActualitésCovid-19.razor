@@ -15,6 +15,7 @@ else
             <tr>
                 <th>Date</th>
                 <th>Actualitedujour</th>
+                <th>Provenance</th>
                 
             </tr>
         </thead>
@@ -24,7 +25,7 @@ else
                 <tr>
                     <td>@actualitecovid.Date.ToShortDateString()</td>
                     <td>@actualitecovid.Actualitedujour</td>
-                    
+                    <td> <a href="@actualitecovid.Provenance">@actualitecovid.Provenance</a>  </td>
                 </tr>
             }
         </tbody>
@@ -37,7 +38,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        actualiteCovid = await Http.GetFromJsonAsync<ActualitesCovid[]>("sample-data/actu.json");
+        actualiteCovid = await Http.GetFromJsonAsync<ActualiteCovid[]>("sample-data/actu.json");
+        actualiteCovid = actualiteCovid.OrderByDescending(x => x.Date).ToArray();    
     }
 
     
