@@ -1,19 +1,37 @@
 [
     {
-        "date": "2018-05-06",
+        "date": "2020-05-06",
         "cas": 100,
         "morts": 10,
         "guerisons": 3
     },
     {
-        "date": "2018-05-07",
+        "date": "2020-05-07",
         "cas": 110,
         "morts": 17,
         "guerisons": 13
     },
     {
-        "date": "2018-05-08",
+        "date": "2020-05-08",
         "cas": 118,
+        "morts": 18,
+        "guerisons": 19
+    },
+    {
+        "date": "2020-05-09",
+        "cas": 95,
+        "morts": 10,
+        "guerisons": 3
+    },
+    {
+        "date": "2020-05-10",
+        "cas": 120,
+        "morts": 17,
+        "guerisons": 13
+    },
+    {
+        "date": "2020-05-11",
+        "cas": 97,
         "morts": 18,
         "guerisons": 19
     }
