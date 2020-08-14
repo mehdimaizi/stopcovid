@@ -1,0 +1,22 @@
+[
+    {
+        "Regions": "Casablanca Settat",
+        "Cas": 100
+        
+    },
+    {
+        "Regions": "Fès Meknès",
+        "Cas": 110
+       
+    },
+    {
+        "Regions": "Tanger Tétouan Al Hoceima",
+        "Cas": 118
+        
+    },
+    {
+        "Regions": "Marrakech Safi",
+        "Cas": 118
+    }
+
+]
