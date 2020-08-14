@@ -1,0 +1,46 @@
+@using stopcovid.Models
+@page "/Vuedensemble"
+@inject HttpClient Http
+
+
+<h1>Vue d'ensemble des cas </h1>
+
+<p> Cette page vous donne l'ensemble des cas confirmés au maroc  </p>
+
+@if (ensembleCas == null)
+{
+    <p><em>Veuillez patienter, chargement des donees...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Regions</th>
+                <th>Cas</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ensemblecas in ensembleCas)
+            {
+                <tr>
+                    <td>@ensemblecas.Regions</td>
+                    <td>@ensemblecas.Cas</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Ensemblecas[] ensembleCas;
+
+    protected override async Task OnInitializedAsync()
+    {
+      ensembleCas = await Http.GetFromJsonAsync<Ensemblecas[]>("sample-data/ensemble.json");
+      ensembleCas = ensembleCas.OrderBy(e => e.Regions).ToArray();
+    }
+
+    
+}
