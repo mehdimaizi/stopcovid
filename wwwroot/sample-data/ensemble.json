@@ -10,12 +10,46 @@
        
     },
     {
-        "Regions": "Tanger Tétouan Al Hoceima",
-        "Cas": 118
-        
-    },
-    {
         "Regions": "Marrakech Safi",
         "Cas": 118
+    },
+    {
+        "Regions": "Béni Mellal-Khénifra",
+        "Cas": 1342
+    },
+    {
+        "Regions": "Tanger-Tétouan-Al Hoceïma",
+        "Cas": 8533
+    },
+    {
+         "Regions": "Rabat-Salé-Kénitra",
+         "Cas": 3990   
+    },
+    {
+        "Regions": "Drâa-Tafilalet",
+        "Cas": 1437
+    },
+    {
+        "Regions": "Souss-Massa",
+        "Cas": 383
+    },
+    {
+        "Regions": "Oriental",
+        "Cas": 771
+    },
+    {
+        "Regions": "Dakhla-Oued Ed Dahab",
+        "Cas": 	213
+    },
+    { 
+        "Regions": "Guelmim-Oued Noun",
+        "Cas": 200 
+    },
+    {
+        "Regions": "Laâyoune-Sakia El Hamra",
+        "Cas": 910 
     }
+
+
+
 ]
