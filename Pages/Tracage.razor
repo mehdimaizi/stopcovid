@@ -1,33 +1,99 @@
+@page "/Tracage"
+@using stopcovid.Models
+@using System.Linq
+@inject HttpClient Http
+
 <html>
 <body>
 
 <h1>The select element</h1>
 
-<p>Choisissez la région ou  vous souhaitiez partir.</p>
+<p>Choisissez la région ou  vous souhaitiez partir parmi les @totalDesCas.ToString() .</p>
 
 <form action="/action_page.php">
   <label for="région">Choisissez une région:</label>
-  <select name="région" id="région">
-    <option value="Casablanca-Settat">Casablanca-Settat</option>
-    <option value="Béni Mellal-Khénifra">Béni Mellal-Khénifra</option>
-    <option value="Marrakech-Safi">Marrakech-Safi</option>
-      <option value="Rabat-Salé-Kénitra">Rabat-Salé-Kénitra</option>
-      <option value="Fès-Meknès">Fès-Meknès</option>
-      <option value="Tanger-Tétouan-Al Hoceïma">Tanger-Tétouan-Al Hoceïma</option>
-      <option value="Drâa-Tafilalet">Drâa-Tafilalet</option>
-      <option value="Souss-Massa">Souss-Massa</option>
-      <option value="Oriental">Oriental</option>
-      <option value="Dakhla-Oued Ed Dahab">Dakhla-Oued Ed Dahab</option>
-      <option value="Laâyoune-Sakia El Hamra">Laâyoune-Sakia El Hamra</option>
-      <option value="Guelmim-Oued Noun">Guelmim-Oued Noun</option>
+  <select name="région" id="région"  @bind="CheckSelected">
+    @if (totalDesCas > 0)
+    {
+      foreach (var ec in ensembleCas)
+      {
+          <option value="@ec.RegionId"> @ec.Regions </option>
+      }
+    }
     
   </select>
   <br><br>
-  <input type="Soumettre" value="Soumettre">
+  @if (@IsDangerousRegion)
+  {
+    <img src="/images/1200px-Achtung.svg.png" alt="Danger" width="460" height="345">
+    <p>
+      
+    </p>
+  }
+  else
+  {
+      <img src="/images/OIP.jfif" alt="No Danger" width="460" height="345">
+  }
+  <h1>@totalDesCasEnRegion</h1>
+  
+  <h1>@selectedRegionName</h1>
+  
+
 </form>
 
-<p>Cliquer sur Soumettre "Soumettre" button and the form-data will be sent to a page on the 
-server called "action_page.php".</p>
+
 
 </body>
 </html>
+
+@code {
+  private List<Ensemblecas> ensembleCas;
+      private int selectedRegion = 1;
+      private string selectedRegionName = "Casa";
+      private int totalDesCasEnRegion = 0;
+      private int totalDesCas = 0;
+      private string selectedItem = "";
+      private bool IsDangerousRegion = false;
+      protected override async Task OnInitializedAsync()
+      {
+          ensembleCas = await Http.GetFromJsonAsync<List<Ensemblecas>>("sample-data/ensemble.json");
+          ensembleCas = ensembleCas.OrderBy(e => e.Regions).ToList();
+         
+
+          totalDesCas = ensembleCas.Count();
+      }
+
+      private string CheckSelected
+    {
+        get
+        {
+            return selectedItem;
+        }
+        set
+        {
+            ChangeEventArgs selectedEventArgs = new ChangeEventArgs();
+            selectedEventArgs.Value = value;
+            OnChangeSelected(selectedEventArgs);
+        }
+    }
+
+    private void OnChangeSelected(ChangeEventArgs e)
+    {
+        if (e.Value.ToString() != string.Empty)
+        {
+            selectedItem = e.Value.ToString();
+            var region = ensembleCas.Where(ex => ex.RegionId.ToString() == selectedItem).FirstOrDefault();
+            totalDesCasEnRegion = region.Cas;
+            selectedRegionName = region.Regions;
+            if(region.Cas > 1000)
+            {
+              IsDangerousRegion = true;
+            }
+            else
+            {
+                IsDangerousRegion = false;
+            }
+
+        }
+    }
+}
