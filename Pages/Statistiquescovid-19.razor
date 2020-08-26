@@ -44,13 +44,49 @@ else
             }
         </tbody>
     </table>
-    
+    <ChartJsBarChart @ref="_barChartJs" Config="@_config" Width="600" Height="300" />
+
+@code {
+    private CovidStat[] covidStats;
+    private BarConfig _config;
+    private ChartJsBarChart _barChartJs;
+    protected override async Task OnInitializedAsync()
+    {
+        covidStats = await Http.GetFromJsonAsync<CovidStat[]>("sample-data/stat.json");
+        covidStats = covidStats.OrderByDescending(c => c.Date).ToArray();
+        
+        var barSet = new BarDataset<TimeTuple<double>>
+        {
+            Label = "Evolution des cas Covid-19",
+            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
+            BorderWidth = 1,
+            HoverBackgroundColor = ColorUtil.ColorString(0, 0, 0, 0.1),
+            HoverBorderColor = "#020202",
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
+
+        
+        List<TimeTuple<double>> data = new List<TimeTuple<double>>();
+        foreach (var item in covidStats)
+        {
+            TimeTuple<double> dataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Cas);
+            data.Add(dataItem);
+        } 
+      
+        barSet.AddRange(data);
+        _config.Data.Datasets.Add(barSet);      
+
+
+        
+       
+    }
 }
 
  // UN AUTRE GRAPHE
         
        
-    }
+    
        
     
     protected override void OnInitialized()
