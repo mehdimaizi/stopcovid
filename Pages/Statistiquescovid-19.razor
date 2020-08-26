@@ -13,9 +13,9 @@
 
 
 @page "/statistiquescovid-19"
-<h1>Derniers nouvelle du covid-19</h1>
+<h1>Statistiques du Covid-19 au Maroc</h1>
 @inject HttpClient Http
-<p> Cette page vous permet d'avoir les statistiques du virus covid-19 au maroc par région  </p>
+<p> Cette page vous permet d'avoir les statistiques du virus covid-19 au Maroc   </p>
 
 @if (covidStats == null)
 {
@@ -47,44 +47,12 @@ else
     
 }
 
-<ChartJsBarChart @ref="_barChartJs" Config="@_config" Width="600" Height="300" />
-
-@code {
-    private CovidStat[] covidStats;
-    private BarConfig _config;
-    private ChartJsBarChart _barChartJs;
-    protected override async Task OnInitializedAsync()
-    {
-        covidStats = await Http.GetFromJsonAsync<CovidStat[]>("sample-data/stat.json");
-        covidStats = covidStats.OrderByDescending(c => c.Date).ToArray();
-        
-        var barSet = new BarDataset<TimeTuple<double>>
-        {
-            Label = "Evolution des cas Covid-19",
-            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
-            BorderWidth = 1,
-            HoverBackgroundColor = ColorUtil.ColorString(0, 0, 0, 0.1),
-            HoverBorderColor = "#020202",
-            HoverBorderWidth = 1,
-            BorderColor = "#ffffff"
-        };
-
-        
-        List<TimeTuple<double>> data = new List<TimeTuple<double>>();
-        foreach (var item in covidStats)
-        {
-            TimeTuple<double> dataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Cas);
-            data.Add(dataItem);
-        } 
-      
-        barSet.AddRange(data);
-        _config.Data.Datasets.Add(barSet);      
-
-
-        // UN AUTRE GRAPHE
+ // UN AUTRE GRAPHE
         
        
     }
+       
+    
     protected override void OnInitialized()
     {
         _config = new BarConfig

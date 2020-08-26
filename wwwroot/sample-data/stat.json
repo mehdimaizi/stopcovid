@@ -1,38 +1,38 @@
 [
     {
-        "date": "2020-05-06",
-        "cas": 100,
-        "morts": 10,
-        "guerisons": 3
+        "date": "2020-08-20",
+        "cas": 989,
+        "morts": 23,
+        "guerisons": 1106
     },
     {
-        "date": "2020-05-07",
-        "cas": 110,
-        "morts": 17,
-        "guerisons": 13
+        "date": "2020-08-21",
+        "cas": 1346,
+        "morts": 34,
+        "guerisons": 456
     },
     {
-        "date": "2020-05-08",
-        "cas": 118,
-        "morts": 18,
-        "guerisons": 19
+        "date": "2020-08-22",
+        "cas": 1786,
+        "morts": 42,
+        "guerisons": 1234
     },
     {
-        "date": "2020-05-09",
-        "cas": 95,
-        "morts": 10,
-        "guerisons": 3
+        "date": "2020-08-23",
+        "cas": 1100,
+        "morts": 30,
+        "guerisons": 456
     },
     {
-        "date": "2020-05-10",
-        "cas": 120,
-        "morts": 17,
-        "guerisons": 13
+        "date": "2020-08-24",
+        "cas": 1275,
+        "morts": 45,
+        "guerisons": 980
     },
     {
-        "date": "2020-05-11",
-        "cas": 97,
-        "morts": 18,
-        "guerisons": 19
+        "date": "2020-08-25",
+        "cas": 1234,
+        "morts": 34,
+        "guerisons": 750
     }
 ]
