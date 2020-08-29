@@ -47,18 +47,27 @@ else
     
 }
 
-<ChartJsBarChart @ref="_barChartJs" Config="@_config" Width="600" Height="300" />
+<ChartJsBarChart @ref="_barCasChartJs" Config="@_casConfig" Width="600" Height="300" />
+<ChartJsBarChart @ref="_mortCasChartJs" Config="@_mortConfig" Width="600" Height="300" />
+<ChartJsBarChart @ref="_guerisCasChartJs" Config="@_guerisConfig" Width="600" Height="300" />
 
 @code {
     private CovidStat[] covidStats;
-    private BarConfig _config;
-    private ChartJsBarChart _barChartJs;
+
+    private BarConfig _casConfig;
+    private BarConfig _mortConfig;
+    private BarConfig _guerisConfig;
+
+    private ChartJsBarChart _barCasChartJs;
+    private ChartJsBarChart _mortCasChartJs;
+    private ChartJsBarChart _guerisCasChartJs;
+
     protected override async Task OnInitializedAsync()
     {
         covidStats = await Http.GetFromJsonAsync<CovidStat[]>("sample-data/stat.json");
         covidStats = covidStats.OrderByDescending(c => c.Date).ToArray();
         
-        var barSet = new BarDataset<TimeTuple<double>>
+        var casBarSet = new BarDataset<TimeTuple<double>>
         {
             Label = "Evolution des cas Covid-19",
             BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
@@ -69,25 +78,62 @@ else
             BorderColor = "#ffffff"
         };
 
+        var mortBarSet = new BarDataset<TimeTuple<double>>
+        {
+            Label = "Evolution des morts Covid-19",
+            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
+            BorderWidth = 1,
+            HoverBackgroundColor = ColorUtil.ColorString(0, 0, 0, 0.1),
+            HoverBorderColor = "#020202",
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
+
+        var guerisBarSet = new BarDataset<TimeTuple<double>>
+        {
+            Label = "Evolution des guerissons Covid-19",
+            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString() },
+            BorderWidth = 1,
+            HoverBackgroundColor = ColorUtil.ColorString(0, 0, 0, 0.1),
+            HoverBorderColor = "#020202",
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
+
         
-        List<TimeTuple<double>> data = new List<TimeTuple<double>>();
+        List<TimeTuple<double>> casData = new List<TimeTuple<double>>();
+        List<TimeTuple<double>> mortData = new List<TimeTuple<double>>();
+        List<TimeTuple<double>> guerisData = new List<TimeTuple<double>>();    
+
         foreach (var item in covidStats)
         {
-            TimeTuple<double> dataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Cas);
-            data.Add(dataItem);
+            TimeTuple<double> casDataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Cas);
+            TimeTuple<double> mortDataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Morts);
+            TimeTuple<double> guerisDataItem = new TimeTuple<double>((Moment)item.Date, (double)item.Guerisons);
+
+            casData.Add(casDataItem);
+            mortData.Add(mortDataItem);
+            guerisData.Add(guerisDataItem);
+
         } 
+
+        
       
-        barSet.AddRange(data);
-        _config.Data.Datasets.Add(barSet);      
+        casBarSet.AddRange(casData);
+        mortBarSet.AddRange(mortData);
+        guerisBarSet.AddRange(guerisData);
 
+        _casConfig.Data.Datasets.Add(casBarSet);      
+        _mortConfig.Data.Datasets.Add(mortBarSet);
+        _guerisConfig.Data.Datasets.Add(guerisBarSet);
 
-        // UN AUTRE GRAPHE
+        
         
        
     }
     protected override void OnInitialized()
     {
-        _config = new BarConfig
+        _casConfig = new BarConfig
         {
             Options = new BarOptions
             {
@@ -126,7 +172,81 @@ else
         };
 
         
-        
+        _mortConfig = new BarConfig
+        {
+            Options = new BarOptions
+            {
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = "Statistiques des morts du Codid-19"
+                },
+                Scales = new BarScales
+                {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new BarTimeAxis
+                        {
+                            BarPercentage = 0.75,
+                            Time = new TimeOptions
+                            {
+                                Unit = TimeMeasurement.Day
+                            },
+                            Offset = true
+                        }
+                },
+                YAxes = new List<CartesianAxis>
+                {
+                        new BarLinearCartesianAxis
+                        {
+                            Ticks = new LinearCartesianTicks
+                            {
+                                BeginAtZero = true
+                            }
+                        }
+                    }
+                },
+                Responsive = true
+            }
+        };
+
+        _guerisConfig = new BarConfig
+        {
+            Options = new BarOptions
+            {
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = "Statistiques des guerissons du Codid-19"
+                },
+                Scales = new BarScales
+                {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new BarTimeAxis
+                        {
+                            BarPercentage = 0.75,
+                            Time = new TimeOptions
+                            {
+                                Unit = TimeMeasurement.Day
+                            },
+                            Offset = true
+                        }
+                },
+                YAxes = new List<CartesianAxis>
+                {
+                        new BarLinearCartesianAxis
+                        {
+                            Ticks = new LinearCartesianTicks
+                            {
+                                BeginAtZero = true
+                            }
+                        }
+                    }
+                },
+                Responsive = true
+            }
+        };
         
     }
     
