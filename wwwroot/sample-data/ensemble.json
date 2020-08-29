@@ -2,64 +2,64 @@
     {
         "RegionId": 1,
         "Regions": "Casablanca Settat",
-        "Cas": 100
+        "Cas": 15361
         
     },
     {
         "RegionId": 2,
         "Regions": "Fès Meknès",
-        "Cas": 110
+        "Cas": 8299
        
     },
     {
         "RegionId": 3,
         "Regions": "Marrakech Safi",
-        "Cas": 118
+        "Cas": 8763
     },
     {
         "RegionId": 4,
         "Regions": "Béni Mellal-Khénifra",
-        "Cas": 1342
+        "Cas": 2345
     },
     {
         "RegionId": 5,
         "Regions": "Tanger-Tétouan-Al Hoceïma",
-        "Cas": 8533
+        "Cas": 9286
     },
     {
         "RegionId": 6, 
         "Regions": "Rabat-Salé-Kénitra",
-         "Cas": 3990   
+         "Cas": 4968  
     },
     {
         "RegionId": 7,
         "Regions": "Drâa-Tafilalet",
-        "Cas": 1437
+        "Cas": 2028
     },
     {
         "RegionId": 8,
         "Regions": "Souss-Massa",
-        "Cas": 383
+        "Cas": 943
     },
     {
         "RegionId": 9,
         "Regions": "Oriental",
-        "Cas": 771
+        "Cas": 1003
     },
     {
         "RegionId": 10,
         "Regions": "Dakhla-Oued Ed Dahab",
-        "Cas": 	213
+        "Cas": 	311
     },
     { 
         "RegionId": 11,
         "Regions": "Guelmim-Oued Noun",
-        "Cas": 200 
+        "Cas": 234
     },
     {
         "RegionId": 12,
         "Regions": "Laâyoune-Sakia El Hamra",
-        "Cas": 910 
+        "Cas": 982
     }
 
 
